@@ -15,10 +15,13 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from WishList.views import login_page, logout_page
+from WishList.views import login_page, logout_page, index, register_page, register_redirect
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('login', login_page),
+    path('login/', login_page),
     path('logout', logout_page),
+    path('register/', register_page),
+    path('register_redirect', register_redirect),
+    path('', index)
 ]
