@@ -31,3 +31,11 @@ def logout_page(request):
     if request.method == 'POST':
         logout(request)
     return redirect('/login')
+
+def own_wishlist(request):
+    #TODO
+    pass
+
+def list_of_wishlists(request):
+    #TODO
+    pass
