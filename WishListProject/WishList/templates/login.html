@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>GoToPass:AdminLogIn</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrtiy="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+   <a class="navbar-brand" href="#">
+    <img src="/static/logo.jpg" width="100" height="50" alt="">
+  </a>
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="">Главная<span class="sr-only">(current)</span></a>
+      </li>
+            </ul>
+      </div>
+      </nav>
+      <div class="container">
+<h1>Вход на сайт</h1>
+{% if messages %}
+    {% for message in messages %}
+    <div style="color: red">{{ message }}</div>
+    {% endfor %}
+{% endif %}
+<form method="post">
+    {% csrf_token %}
+    <div class="row">
+    <div class="col">
+    <label>Логин:</label>
+    <input type="text" name="login" class="form-control" placeholder="Введите логин  " autofocus /><br>
+    </div>
+    </div>
+ <div class="form-group">
+    <label for="exampleInputPassword1">Пароль:</label>
+    <input type="password" placeholder="Введите пароль" class="form-control" id="exampleInputPassword1" name="password"/><br>
+ </div>
+    <input type="submit" class="btn btn-primary" value="Вход">
+</form>
+</div>
+</body>
+</html>
