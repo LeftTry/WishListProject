@@ -4,9 +4,6 @@ from django.http import JsonResponse, HttpResponse, FileResponse
 from django.shortcuts import render, redirect
 from django.contrib import messages
 
-def index(request):
-    return redirect('/login')
-
 
 def login_page(request):
     if request.method == 'GET':
@@ -46,15 +43,15 @@ def register_page(request):
             messages.error(request, 'Заполните все поля!')
             return redirect('/register')
         if password1 != password2:
-            messages.error(request, 'пароли не совпадают')
+            messages.error(request, 'Пароли не совпадают')
             return redirect('/register')
 
         user = User.objects.create_user(username, '', password1)
         user.save()
-        redirect('/login')
+        return redirect('/')
     else:
-            messages.error(request, 'Неправильный логин или пароль!')
-            return redirect('/register')
+        messages.error(request, 'Неправильный логин или пароль!')
+        return redirect('/register')
 
 
 def logout_page(request):
@@ -67,8 +64,15 @@ def register_redirect(request):
 
 def own_wishlist(request):
     #TODO
-    pass
+    if request.user.is_authenticated:
+            return render(request, 'own_wishlist.html')
+    else:
+        return redirect('/login')
 
 def list_of_wishlists(request):
     #TODO
-    pass
+    if request.user.is_authenticated:
+        return render(request, 'list_of_wishlists.html')
+    else:
+        return redirect('/login')
+    

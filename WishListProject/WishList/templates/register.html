@@ -13,11 +13,22 @@
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item active">
-        <a class="nav-link" href="">Главная<span class="sr-only">(current)</span></a>
+        <a class="nav-link" href="/">Главная<span class="sr-only"></span></a>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link" href="/my_list">Мой вишлист<span class="sr-only"></span></a>
       </li>
             </ul>
-      </div>
-      </nav>
+      <form method="post" action="/logout">
+        {% csrf_token %}
+        <input type="submit" name="LogOut" class="btn btn-primary" value="Вход">
+      </form>
+      <form method="post" action="/register_redirect">
+        {% csrf_token %}
+        <input type="submit" name="Register" class="btn btn-outline-secondary" value="Регистрация">
+    </form>
+  </div>
+</nav>
       <div class="container">
 <h1>Регистрация на сайте</h1>
 {% if messages %}
@@ -41,7 +52,7 @@
     <label for="exampleInputPassword1">Подтвердите пароль:</label>
     <input type="password" placeholder="Повторите пароль" class="form-control" id="exampleRightInputPassword1" name="password_check"/><br>
  </div>
-    <input type="submit" class="btn btn-primary" value="Вход">
+    <input type="submit" class="btn btn-primary" value="Зарегистрироваться">
 </form>
 </div>
 </body>

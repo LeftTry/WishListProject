@@ -12,11 +12,14 @@
   </a>
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
-      <li class="nav-item active">
-        <a class="nav-link" href="">Главная<span class="sr-only">(current)</span></a>
-      </li>
+        <li class="nav-item active">
+            <a class="nav-link" href="/">Главная<span class="sr-only"></span></a>
+          </li>
+          <li class="nav-item active">
+            <a class="nav-link" href="/my_list">Мой вишлист<span class="sr-only"></span></a>
+          </li>
             </ul>
-      <form method="post" action="/register_redirect">
+      <form method="post" action="/logout">
         {% csrf_token %}
         <input type="submit" name="LogOut" class="btn btn-primary" value="Выйти">
       </form>
@@ -30,15 +33,15 @@
             <div class="card-body">
                 <ul class="list-group">
                     <li class="list-group-item">
-                        <input class="form-check-input me-1" type="checkbox" value="" id="firstCheckbox1">
+                        <input class="form-check-input me-1" type="checkbox" value="" id="firstCheckbox1" disabled>
                         <label class="form-check-label" for="firstCheckbox1">First checkbox</label>
                     </li>
                     <li class="list-group-item">
-                        <input class="form-check-input me-1" type="checkbox" value="" id="secondCheckbox1">
+                        <input class="form-check-input me-1" type="checkbox" value="" id="secondCheckbox1" disabled>
                         <label class="form-check-label" for="secondCheckbox1">Second checkbox</label>
                     </li>
                     <li class="list-group-item">
-                        <input class="form-check-input me-1" type="checkbox" value="" id="thirdCheckbox1">
+                        <input class="form-check-input me-1" type="checkbox" value="" id="thirdCheckbox1" disabled>
                         <label class="form-check-label" for="thirdCheckbox1">Third checkbox</label>
                     </li>
                 </ul>
@@ -51,15 +54,15 @@
             <div class="card-body">
                 <ul class="list-group">
                     <li class="list-group-item">
-                        <input class="form-check-input me-1" type="checkbox" value="" id="firstCheckbox2">
+                        <input class="form-check-input me-1" type="checkbox" value="" id="firstCheckbox2" disabled>
                         <label class="form-check-label" for="firstCheckbox2">First checkbox</label>
                     </li>
                     <li class="list-group-item">
-                        <input class="form-check-input me-1" type="checkbox" value="" id="secondCheckbox2">
+                        <input class="form-check-input me-1" type="checkbox" value="" id="secondCheckbox2" disabled>
                         <label class="form-check-label" for="secondCheckbox2">Second checkbox</label>
                     </li>
                     <li class="list-group-item">
-                        <input class="form-check-input me-1" type="checkbox" value="" id="thirdCheckbox2">
+                        <input class="form-check-input me-1" type="checkbox" value="" id="thirdCheckbox2" disabled>
                         <label class="form-check-label" for="thirdCheckbox2">Third checkbox</label>
                     </li>
                 </ul>
@@ -72,15 +75,15 @@
             <div class="card-body">
                 <ul class="list-group">
                     <li class="list-group-item">
-                        <input class="form-check-input me-1" type="checkbox" value="" id="firstCheckbox3">
+                        <input class="form-check-input me-1" type="checkbox" value="" id="firstCheckbox3" disabled>
                         <label class="form-check-label" for="firstCheckbox3">First checkbox</label>
                     </li>
                     <li class="list-group-item">
-                        <input class="form-check-input me-1" type="checkbox" value="" id="secondCheckbox3">
+                        <input class="form-check-input me-1" type="checkbox" value="" id="secondCheckbox3" disabled>
                         <label class="form-check-label" for="secondCheckbox3">Second checkbox</label>
                     </li>
                     <li class="list-group-item">
-                        <input class="form-check-input me-1" type="checkbox" value="" id="thirdCheckbox3">
+                        <input class="form-check-input me-1" type="checkbox" value="" id="thirdCheckbox3" disabled>
                         <label class="form-check-label" for="thirdCheckbox3">Third checkbox</label>
                     </li>
                 </ul>
@@ -93,15 +96,15 @@
             <div class="card-body">
                 <ul class="list-group">
                     <li class="list-group-item">
-                        <input class="form-check-input me-1" type="checkbox" value="" id="firstCheckbox4">
+                        <input class="form-check-input me-1" type="checkbox" value="" id="firstCheckbox4" disabled>
                         <label class="form-check-label" for="firstCheckbox4">First checkbox</label>
                     </li>
                     <li class="list-group-item">
-                        <input class="form-check-input me-1" type="checkbox" value="" id="secondCheckbox4">
+                        <input class="form-check-input me-1" type="checkbox" value="" id="secondCheckbox4" disabled>
                         <label class="form-check-label" for="secondCheckbox4">Second checkbox</label>
                     </li>
                     <li class="list-group-item">
-                        <input class="form-check-input me-1" type="checkbox" value="" id="thirdCheckbox4">
+                        <input class="form-check-input me-1" type="checkbox" value="" id="thirdCheckbox4" disabled>
                         <label class="form-check-label" for="thirdCheckbox4">Third checkbox</label>
                     </li>
                 </ul>

@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from WishList.views import login_page, logout_page, index, register_page, register_redirect
+from WishList.views import login_page, logout_page, list_of_wishlists, own_wishlist, register_page, register_redirect
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -23,5 +23,6 @@ urlpatterns = [
     path('logout', logout_page),
     path('register/', register_page),
     path('register_redirect', register_redirect),
-    path('', index)
+    path('', list_of_wishlists),
+    path('my_list/', own_wishlist)
 ]

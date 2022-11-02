@@ -13,28 +13,48 @@
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item active">
-        <a class="nav-link" href="">Главная<span class="sr-only">(current)</span></a>
+        <a class="nav-link" href="/">Главная<span class="sr-only"></span></a>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link" href="/my_list">Мой вишлист<span class="sr-only"></span></a>
       </li>
             </ul>
-      <form method="post" action="/register_redirect">
+      <form method="post" action="/logout">
         {% csrf_token %}
         <input type="submit" name="LogOut" class="btn btn-primary" value="Выйти">
       </form>
   </div>
 </nav>
-<ul class="list-group">
-  <li class="list-group-item">
-    <input class="form-check-input me-1" type="checkbox" value="" id="firstCheckbox">
-    <label class="form-check-label" for="firstCheckbox">First checkbox</label>
-  </li>
-  <li class="list-group-item">
-    <input class="form-check-input me-1" type="checkbox" value="" id="secondCheckbox">
-    <label class="form-check-label" for="secondCheckbox">Second checkbox</label>
-  </li>
-  <li class="list-group-item">
-    <input class="form-check-input me-1" type="checkbox" value="" id="thirdCheckbox">
-    <label class="form-check-label" for="thirdCheckbox">Third checkbox</label>
-  </li>
-</ul>
+<div class="container text-center">
+  <div class="row align-items-start">
+    <div class="col">
+      
+    </div>
+    <div class="col">
+      <ul class="list-group">
+        <li class="list-group-item">
+          <input class="form-check-input me-1" type="checkbox" value="" id="firstCheckbox">
+          <label class="form-check-label" for="firstCheckbox">First checkbox</label>
+        </li>
+        <li class="list-group-item">
+          <input class="form-check-input me-1" type="checkbox" value="" id="secondCheckbox">
+          <label class="form-check-label" for="secondCheckbox">Second checkbox</label>
+        </li>
+        <li class="list-group-item">
+          <input class="form-check-input me-1" type="checkbox" value="" id="thirdCheckbox">
+          <label class="form-check-label" for="thirdCheckbox">Third checkbox</label>
+        </li>
+      </ul>
+    </div>
+    <div class="col">
+      <form method="post">
+        {% csrf_token %}
+        <div class="form-group">
+          <input type="text" placeholder="Введите желание" class="form-control" id="exampleInputPassword1" name="wish"/><br>
+       </div>
+      <input type="submit" class="btn btn-primary" value="Добавить в вишлист">
+    </form>
+    </div>
+  </div>
 </body>
 </html>
