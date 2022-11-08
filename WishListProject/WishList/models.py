@@ -4,6 +4,6 @@ class Object(models.Model):
     name = models.CharField(max_length=200)
     description = models.CharField(max_length=2000)
 
-class User(models.Model):
+class Person(models.Model):
     name = models.CharField(max_length=20)
-    all_ids = models.JSONField()
+    all_ids = models.JSONField(default=list)

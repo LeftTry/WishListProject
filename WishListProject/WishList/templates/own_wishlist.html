@@ -56,5 +56,26 @@
     </form>
     </div>
   </div>
+  {% if list_of_wishes %}
+    <ul class="list-group">
+    {% for book in list_of_wishes %}
+    <ul class="list-group list-group-horizontal">
+        <li class="list-group-item"><a href="/book/{{book.id}}"> {{ book.name }}</a> </li>
+        <li class="list-group-item">{{ book.author.name }} </li>
+        <li class="list-group-item">{{ book.author.surname }} </li>
+        <li class="list-group-item"><form action="{% url 'books:delete_book' book.id %}" method="post">
+            {% csrf_token %}
+            <input type="submit" class="btn btn-danger" value="Удалить книгу">
+        </form></li>
+        <li class="list-group-item"><form action="{% url 'books:delete_author' book.author.id %}" method="post">
+            {% csrf_token %}
+            <input type="submit" class="btn btn-danger" value="Удалить автора">
+        </form></li>
+    </ul>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No books are available.</p>
+{% endif %}
 </body>
 </html>

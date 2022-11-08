@@ -3,7 +3,9 @@ from django.contrib.auth.models import User
 from django.http import JsonResponse, HttpResponse, FileResponse
 from django.shortcuts import render, redirect
 from django.contrib import messages
-
+from .models import Person, Object
+import json
+from django.template import loader
 
 def login_page(request):
     if request.method == 'GET':
@@ -47,6 +49,8 @@ def register_page(request):
             return redirect('/register')
 
         user = User.objects.create_user(username, '', password1)
+        person = Person(name=username)
+        person.save()
         user.save()
         return redirect('/')
     else:
@@ -65,7 +69,14 @@ def register_redirect(request):
 def own_wishlist(request):
     #TODO
     if request.user.is_authenticated:
-            return render(request, 'own_wishlist.html')
+        if request.method == 'GET':
+            user = Person.objects.get(name = request.user.username)
+            list_of_wishes = json.JSONDecoder.decode(user.all_ids)
+            template = loader.get_template('own_wishlist.html')
+            context = {
+                'list_of_wishes': list_of_wishes
+            }
+            return HttpResponse(template.render(context, request))
     else:
         return redirect('/login')
 
