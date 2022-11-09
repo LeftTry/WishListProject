@@ -14,15 +14,16 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
-from WishList.views import login_page, logout_page, list_of_wishlists, own_wishlist, register_page, register_redirect
+from django.urls import path, include
+from WishList.views import login_page, logout_page, list_of_wishlists, own_wishlist, register_page, register_redirect, delete
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('my_list/', own_wishlist),
     path('login/', login_page),
     path('logout', logout_page),
     path('register/', register_page),
     path('register_redirect', register_redirect),
+    path('wish/', include('WishList.urls')),
     path('', list_of_wishlists),
-    path('my_list/', own_wishlist)
 ]

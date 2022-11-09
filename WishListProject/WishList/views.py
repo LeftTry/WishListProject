@@ -1,7 +1,7 @@
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.http import JsonResponse, HttpResponse, FileResponse
-from django.shortcuts import render, redirect
+from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib import messages
 from .models import Person, Object
 import json
@@ -70,13 +70,30 @@ def own_wishlist(request):
     #TODO
     if request.user.is_authenticated:
         if request.method == 'GET':
-            user = Person.objects.get(name = request.user.username)
-            list_of_wishes = json.JSONDecoder.decode(user.all_ids)
+            user = Person.objects.get(name=request.user.username)
+            jd = json.JSONDecoder()
+            list_of_wishes = jd.decode(str(user.all_ids))
+            listw = []
+            for wish_id in list_of_wishes:
+                obj = get_object_or_404(Object, pk=wish_id)
+                listw.append(obj)
             template = loader.get_template('own_wishlist.html')
             context = {
-                'list_of_wishes': list_of_wishes
+                'list_of_wishes': listw
             }
             return HttpResponse(template.render(context, request))
+        if request.method == 'POST':
+            wish = request.POST.get('wish', '')
+            obj, created = Object.objects.get_or_create(name=wish, description='username')
+            user = Person.objects.get(name=request.user.username)
+            jd = json.JSONDecoder()
+            je = json.JSONEncoder()
+            list_of_wishes = jd.decode(str(user.all_ids))
+            list_of_wishes.append(obj.id)
+            json_of_wishes = je.encode(list_of_wishes)
+            user.all_ids = json_of_wishes
+            user.save()
+            return redirect('/my_list')
     else:
         return redirect('/login')
 
@@ -86,4 +103,20 @@ def list_of_wishlists(request):
         return render(request, 'list_of_wishlists.html')
     else:
         return redirect('/login')
-    
+
+def delete(request, pk):
+    if request.user.is_authenticated:
+        if request.method == 'POST':
+            user = Person.objects.get(name=request.user.username)
+            jd = json.JSONDecoder()
+            je = json.JSONEncoder()
+            list_of_wishes = jd.decode(str(user.all_ids))
+            print(list_of_wishes)
+            print(pk)
+            list_of_wishes.remove(int(pk))
+            json_of_wishes = je.encode(list_of_wishes)
+            user.all_ids = json_of_wishes
+            user.save()
+            return redirect('/my_list')
+    else:
+        return redirect('/login')
