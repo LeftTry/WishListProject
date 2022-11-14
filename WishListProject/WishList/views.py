@@ -1,3 +1,5 @@
+import random
+
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.http import JsonResponse, HttpResponse, FileResponse
@@ -6,6 +8,7 @@ from django.contrib import messages
 from .models import Person, Object
 import json
 from django.template import loader
+from django.forms import formset_factory
 
 def login_page(request):
     if request.method == 'GET':
@@ -100,7 +103,43 @@ def own_wishlist(request):
 def list_of_wishlists(request):
     #TODO
     if request.user.is_authenticated:
-        return render(request, 'list_of_wishlists.html')
+        if request.method == 'GET':
+            listoflists = {}
+            for i in range(2):
+                rand_person = random.choice(Person.objects.all())
+                while rand_person.name == request.user.username:
+                    rand_person = random.choice(Person.objects.all())
+                jd = json.JSONDecoder()
+                je = json.JSONEncoder()
+                list_of_random_wishes = jd.decode(str(rand_person.all_ids))
+                list_to_die = []
+                for wish_id in list_of_random_wishes:
+                    obj = get_object_or_404(Object, pk=wish_id)
+                    list_to_die.append(obj)
+                listoflists[rand_person.name] = list_to_die
+            print(listoflists)
+            template = loader.get_template('list_of_wishlists.html')
+            context = {
+                'list_of_lists': listoflists
+            }
+            return HttpResponse(template.render(context, request))
+        if request.method == 'POST':
+            wishes = request.POST.getlist('bro')
+            print("ok")
+            print(wishes)
+            for wish in wishes:
+                print(" new wish")
+                print(wish)
+                obj = Object.objects.get(name=wish, description='username')
+                user = Person.objects.get(name=request.user.username)
+                jd = json.JSONDecoder()
+                je = json.JSONEncoder()
+                list_of_wishes = jd.decode(str(user.all_ids))
+                list_of_wishes.append(obj.id)
+                json_of_wishes = je.encode(list_of_wishes)
+                user.all_ids = json_of_wishes
+                user.save()
+            return redirect('/')
     else:
         return redirect('/login')
 

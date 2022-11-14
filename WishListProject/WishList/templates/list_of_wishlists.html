@@ -25,93 +25,36 @@
       </form>
   </div>
 </nav>
+<form method="post">
+    {% csrf_token %}
+<button type="submit">Submit</button>
 <div class="container text-center">
-  <div class="row row-cols-2">
-    <div class="col">
+  <div class="row align-items-start">
+      {% if list_of_lists %}
+      {% for name, list_of_wishes in list_of_lists.items %}
         <div class="card" style="width: 18rem;">
-            <div class="card-title">Name</div>
+            <div class="card-title"> {{name}}</div>
             <div class="card-body">
                 <ul class="list-group">
+                    {%for wish in list_of_wishes%}
                     <li class="list-group-item">
-                        <input class="form-check-input me-1" type="checkbox" value="" id="firstCheckbox1" disabled>
-                        <label class="form-check-label" for="firstCheckbox1">First checkbox</label>
+                        <div class="form-check">
+                        <input class="form-check-input me-1" type="checkbox" value="{{wish.name}}" name = "bro" id = "olo">
+                        <label class="form-check-label" for="olo"> {{wish.name}}</label>
+                        </div>
                     </li>
-                    <li class="list-group-item">
-                        <input class="form-check-input me-1" type="checkbox" value="" id="secondCheckbox1" disabled>
-                        <label class="form-check-label" for="secondCheckbox1">Second checkbox</label>
-                    </li>
-                    <li class="list-group-item">
-                        <input class="form-check-input me-1" type="checkbox" value="" id="thirdCheckbox1" disabled>
-                        <label class="form-check-label" for="thirdCheckbox1">Third checkbox</label>
-                    </li>
+                    {%endfor%}
                 </ul>
             </div>
         </div>
-    </div>
+      {% endfor %}
+    {% else %}
+      <p>You have not added any wishes.</p>
+    {% endif %}
     <div class="col">
-        <div class="card" style="width: 18rem;">
-            <div class="card-title">Name</div>
-            <div class="card-body">
-                <ul class="list-group">
-                    <li class="list-group-item">
-                        <input class="form-check-input me-1" type="checkbox" value="" id="firstCheckbox2" disabled>
-                        <label class="form-check-label" for="firstCheckbox2">First checkbox</label>
-                    </li>
-                    <li class="list-group-item">
-                        <input class="form-check-input me-1" type="checkbox" value="" id="secondCheckbox2" disabled>
-                        <label class="form-check-label" for="secondCheckbox2">Second checkbox</label>
-                    </li>
-                    <li class="list-group-item">
-                        <input class="form-check-input me-1" type="checkbox" value="" id="thirdCheckbox2" disabled>
-                        <label class="form-check-label" for="thirdCheckbox2">Third checkbox</label>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </div>
-    <div class="col">
-        <div class="card" style="width: 18rem;">
-            <div class="card-title">Name</div>
-            <div class="card-body">
-                <ul class="list-group">
-                    <li class="list-group-item">
-                        <input class="form-check-input me-1" type="checkbox" value="" id="firstCheckbox3" disabled>
-                        <label class="form-check-label" for="firstCheckbox3">First checkbox</label>
-                    </li>
-                    <li class="list-group-item">
-                        <input class="form-check-input me-1" type="checkbox" value="" id="secondCheckbox3" disabled>
-                        <label class="form-check-label" for="secondCheckbox3">Second checkbox</label>
-                    </li>
-                    <li class="list-group-item">
-                        <input class="form-check-input me-1" type="checkbox" value="" id="thirdCheckbox3" disabled>
-                        <label class="form-check-label" for="thirdCheckbox3">Third checkbox</label>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </div>
-    <div class="col">
-        <div class="card" style="width: 18rem;">
-            <div class="card-title">Name</div>
-            <div class="card-body">
-                <ul class="list-group">
-                    <li class="list-group-item">
-                        <input class="form-check-input me-1" type="checkbox" value="" id="firstCheckbox4" disabled>
-                        <label class="form-check-label" for="firstCheckbox4">First checkbox</label>
-                    </li>
-                    <li class="list-group-item">
-                        <input class="form-check-input me-1" type="checkbox" value="" id="secondCheckbox4" disabled>
-                        <label class="form-check-label" for="secondCheckbox4">Second checkbox</label>
-                    </li>
-                    <li class="list-group-item">
-                        <input class="form-check-input me-1" type="checkbox" value="" id="thirdCheckbox4" disabled>
-                        <label class="form-check-label" for="thirdCheckbox4">Third checkbox</label>
-                    </li>
-                </ul>
-            </div>
-        </div>
     </div>
   </div>
 </div>
+</form>
 </body>
 </html>
