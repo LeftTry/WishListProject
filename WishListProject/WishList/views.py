@@ -95,7 +95,8 @@ def own_wishlist(request):
             jd = json.JSONDecoder()
             je = json.JSONEncoder()
             list_of_wishes = jd.decode(str(user.all_ids))
-            list_of_wishes.append(obj.id)
+            if obj.id not in list_of_wishes:
+                list_of_wishes.append(obj.id)
             json_of_wishes = je.encode(list_of_wishes)
             user.all_ids = json_of_wishes
             user.save()
@@ -128,16 +129,17 @@ def list_of_wishlists(request):
         
         if request.method == 'POST':
             wishes = request.POST.getlist('bro')
+            user = Person.objects.get(name=request.user.username)
+            jd = json.JSONDecoder()
+            je = json.JSONEncoder()
+            list_of_wishes = jd.decode(str(user.all_ids))
             for wish in wishes:
                 obj = Object.objects.get(name=wish, description='username')
-                user = Person.objects.get(name=request.user.username)
-                jd = json.JSONDecoder()
-                je = json.JSONEncoder()
-                list_of_wishes = jd.decode(str(user.all_ids))
-                list_of_wishes.append(obj.id)
-                json_of_wishes = je.encode(list_of_wishes)
-                user.all_ids = json_of_wishes
-                user.save()
+                if obj.id not in list_of_wishes:
+                    list_of_wishes.append(obj.id)
+            json_of_wishes = je.encode(list_of_wishes)
+            user.all_ids = json_of_wishes
+            user.save()
             return redirect('/')
     else:
         return redirect('/login')
