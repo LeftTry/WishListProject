@@ -8,7 +8,6 @@ from django.contrib import messages
 from .models import Person, Object
 import json
 from django.template import loader
-from django.forms import formset_factory
 
 def login_page(request):
     if request.method == 'GET':
@@ -19,20 +18,16 @@ def login_page(request):
     if request.method == 'POST':
         username = request.POST.get('login', '')
         password = request.POST.get('password', '')
-
         if username == '' or password == '':
             messages.error(request, 'Заполните все поля!')
             return redirect('/login')
-
         user = authenticate(username=username, password=password)
-
         if user is not None:
             login(request, user)
             return redirect('/')
         else:
             messages.error(request, 'Неправильный логин или пароль!')
             return redirect('/login')
-
 def register_page(request):
     if request.method == 'GET':
         # если юзер залогинен - редирект на основную стр
@@ -110,14 +105,12 @@ def list_of_wishlists(request):
                 while rand_person.name == request.user.username:
                     rand_person = random.choice(Person.objects.all())
                 jd = json.JSONDecoder()
-                je = json.JSONEncoder()
                 list_of_random_wishes = jd.decode(str(rand_person.all_ids))
                 list_to_die = []
                 for wish_id in list_of_random_wishes:
                     obj = get_object_or_404(Object, pk=wish_id)
                     list_to_die.append(obj)
                 listoflists[rand_person.name] = list_to_die
-            print(listoflists)
             template = loader.get_template('list_of_wishlists.html')
             context = {
                 'list_of_lists': listoflists
@@ -125,11 +118,7 @@ def list_of_wishlists(request):
             return HttpResponse(template.render(context, request))
         if request.method == 'POST':
             wishes = request.POST.getlist('bro')
-            print("ok")
-            print(wishes)
             for wish in wishes:
-                print(" new wish")
-                print(wish)
                 obj = Object.objects.get(name=wish, description='username')
                 user = Person.objects.get(name=request.user.username)
                 jd = json.JSONDecoder()
@@ -150,8 +139,6 @@ def delete(request, pk):
             jd = json.JSONDecoder()
             je = json.JSONEncoder()
             list_of_wishes = jd.decode(str(user.all_ids))
-            print(list_of_wishes)
-            print(pk)
             list_of_wishes.remove(int(pk))
             json_of_wishes = je.encode(list_of_wishes)
             user.all_ids = json_of_wishes
