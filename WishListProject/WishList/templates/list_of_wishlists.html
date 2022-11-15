@@ -45,7 +45,7 @@
                         <label class="form-check-label" for="olo"> {{wish.name}}</label>
                         {% if perms.WishList.delete_obj %}
                         <label class="form-check-label" for="olo"> 
-                          <form action="{% url 'wishes:delete_obj_adm' wish.name %}" method="post">
+                          <form action="{% url 'wishes:delete_obj_adm' name=name pk=wish.id %}" method="post">
                             {% csrf_token %}
                             <input type="submit" class="btn btn-danger" value="Удалить книгу">
                         </form>

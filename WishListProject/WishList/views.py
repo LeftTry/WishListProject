@@ -9,6 +9,7 @@ from .models import Person, Object
 import json
 from django.contrib.contenttypes.models import ContentType
 from django.template import loader
+from django.contrib.auth.models import PermissionsMixin
 
 def login_page(request):
     if request.method == 'GET':
@@ -168,21 +169,20 @@ def delete(request, pk):
     else:
         return redirect('/login')
 
-def delete_adm(request, pk):
+def delete_adm(request, name, pk):
     if request.user.is_authenticated:
         if request.method == 'POST':
-            user = Person.objects.get(name=request.user.username)
-            if user.have_perm('WishList.delete_obj'):
+            if request.user.has_perm('WishList.delete_obj'):
                 #user = Person.objects.get(name=name)
-                #obj = Object.objects.get(name=pk, description='username')
                 #jd = json.JSONDecoder()
                 #je = json.JSONEncoder()
                 #list_of_wishes = jd.decode(str(user.all_ids))
-                #list_of_wishes.remove(int(obj.id))
+                #list_of_wishes.remove(int(pk))
                 #json_of_wishes = je.encode(list_of_wishes)
                 #user.all_ids = json_of_wishes
                 #user.save()
-                pass
-
+                return redirect('/')
+            else:
+                return redirect('/')
     else:
         return redirect('/login')
