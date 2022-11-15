@@ -173,14 +173,14 @@ def delete_adm(request, name, pk):
     if request.user.is_authenticated:
         if request.method == 'POST':
             if request.user.has_perm('WishList.delete_obj'):
-                #user = Person.objects.get(name=name)
-                #jd = json.JSONDecoder()
-                #je = json.JSONEncoder()
-                #list_of_wishes = jd.decode(str(user.all_ids))
-                #list_of_wishes.remove(int(pk))
-                #json_of_wishes = je.encode(list_of_wishes)
-                #user.all_ids = json_of_wishes
-                #user.save()
+                user = Person.objects.get(name=name)
+                jd = json.JSONDecoder()
+                je = json.JSONEncoder()
+                list_of_wishes = jd.decode(str(user.all_ids))
+                list_of_wishes.remove(int(pk))
+                json_of_wishes = je.encode(list_of_wishes)
+                user.all_ids = json_of_wishes
+                user.save()
                 return redirect('/')
             else:
                 return redirect('/')
