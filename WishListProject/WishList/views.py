@@ -110,10 +110,12 @@ def list_of_wishlists(request):
     if request.user.is_authenticated:
         if request.method == 'GET':
             listoflists = {}
+            listofuserids = []
             for i in range(2):
                 rand_person = random.choice(Person.objects.all())
-                while rand_person.name == request.user.username:
+                while rand_person.name == request.user.username or rand_person.name in listofuserids:
                     rand_person = random.choice(Person.objects.all())
+                listofuserids.append(rand_person.name)
                 jd = json.JSONDecoder()
                 list_of_random_wishes = jd.decode(str(rand_person.all_ids))
                 list_to_die = []
