@@ -15,9 +15,11 @@ def login_page(request):
         if request.user.is_authenticated:
             return redirect('/')
         return render(request, 'login.html')
+    
     if request.method == 'POST':
         username = request.POST.get('login', '')
         password = request.POST.get('password', '')
+        
         if username == '' or password == '':
             messages.error(request, 'Заполните все поля!')
             return redirect('/login')
@@ -28,12 +30,15 @@ def login_page(request):
         else:
             messages.error(request, 'Неправильный логин или пароль!')
             return redirect('/login')
+        
+        
 def register_page(request):
     if request.method == 'GET':
         # если юзер залогинен - редирект на основную стр
         if request.user.is_authenticated:
             return redirect('/')
         return render(request, 'register.html')
+    
     if request.method == 'POST':
         username = request.POST.get('login', '')
         password1 = request.POST.get('password', '')
@@ -61,8 +66,10 @@ def logout_page(request):
         logout(request)
     return redirect('/login')
 
+
 def register_redirect(request):
     return redirect('/register')
+
 
 def own_wishlist(request):
     #TODO
@@ -80,6 +87,7 @@ def own_wishlist(request):
                 'list_of_wishes': listw
             }
             return HttpResponse(template.render(context, request))
+        
         if request.method == 'POST':
             wish = request.POST.get('wish', '')
             obj, created = Object.objects.get_or_create(name=wish, description='username')
@@ -94,6 +102,7 @@ def own_wishlist(request):
             return redirect('/my_list')
     else:
         return redirect('/login')
+    
 
 def list_of_wishlists(request):
     #TODO
@@ -116,6 +125,7 @@ def list_of_wishlists(request):
                 'list_of_lists': listoflists
             }
             return HttpResponse(template.render(context, request))
+        
         if request.method == 'POST':
             wishes = request.POST.getlist('bro')
             for wish in wishes:
@@ -131,6 +141,7 @@ def list_of_wishlists(request):
             return redirect('/')
     else:
         return redirect('/login')
+    
 
 def delete(request, pk):
     if request.user.is_authenticated:
