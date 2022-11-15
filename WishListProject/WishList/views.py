@@ -4,10 +4,12 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.http import JsonResponse, HttpResponse, FileResponse
 from django.shortcuts import get_object_or_404, render, redirect
+from django.http import HttpResponseForbidden
 from django.contrib import messages
 from .models import Person, Object
 import json
 from django.template import loader
+from django.core.exceptions import ObjectDoesNotExist
 
 def login_page(request):
     if request.method == 'GET':
@@ -75,6 +77,10 @@ def own_wishlist(request):
     #TODO
     if request.user.is_authenticated:
         if request.method == 'GET':
+            if request.user.is_superuser:
+                template = loader.get_template('admin_response.html')
+                context = {}
+                return HttpResponse(template.render(context, request))
             user = Person.objects.get(name=request.user.username)
             jd = json.JSONDecoder()
             list_of_wishes = jd.decode(str(user.all_ids))
