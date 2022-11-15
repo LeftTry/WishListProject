@@ -21,13 +21,15 @@
             </ul>
       <form method="post" action="/logout">
         {% csrf_token %}
-        <input type="submit" name="LogOut" class="btn btn-primary" value="Выйти">
+        <input type="submit" name="LogOut" class="btn btn-outline-secondary" value="Выйти">
       </form>
   </div>
 </nav>
 <form method="post">
     {% csrf_token %}
-<button type="submit">Submit</button>
+    <div class="container text-right">
+    <input type="submit" class="btn btn-primary" value="Добавить в вишлист">
+  </div>
 <div class="container text-center">
   <div class="row align-items-start">
       {% if list_of_lists %}
@@ -41,6 +43,14 @@
                         <div class="form-check">
                         <input class="form-check-input me-1" type="checkbox" value="{{wish.name}}" name = "bro" id = "olo">
                         <label class="form-check-label" for="olo"> {{wish.name}}</label>
+                        {% if perms.WishList.delete_obj %}
+                        <label class="form-check-label" for="olo"> 
+                          <form action="{% url 'wishes:delete_obj_adm' wish.name %}" method="post">
+                            {% csrf_token %}
+                            <input type="submit" class="btn btn-danger" value="Удалить книгу">
+                        </form>
+                      </label>
+                        {% endif %}
                         </div>
                     </li>
                     {%endfor%}
