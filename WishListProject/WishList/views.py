@@ -1,15 +1,14 @@
 import random
-
+from django.contrib.auth.decorators import permission_required
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Permission
 from django.http import JsonResponse, HttpResponse, FileResponse
 from django.shortcuts import get_object_or_404, render, redirect
-from django.http import HttpResponseForbidden
 from django.contrib import messages
 from .models import Person, Object
 import json
+from django.contrib.contenttypes.models import ContentType
 from django.template import loader
-from django.core.exceptions import ObjectDoesNotExist
 
 def login_page(request):
     if request.method == 'GET':
@@ -36,7 +35,6 @@ def login_page(request):
         
 def register_page(request):
     if request.method == 'GET':
-        # если юзер залогинен - редирект на основную стр
         if request.user.is_authenticated:
             return redirect('/')
         return render(request, 'register.html')
@@ -55,6 +53,12 @@ def register_page(request):
 
         user = User.objects.create_user(username, '', password1)
         person = Person(name=username)
+        content_type = ContentType.objects.get_for_model(Object)
+        permission, created = Permission.objects.get_or_create(
+            codename='delete_obj',
+            content_type=content_type,
+        )
+        user.user_permissions.add(permission)
         person.save()
         user.save()
         return redirect('/')
@@ -77,10 +81,6 @@ def own_wishlist(request):
     #TODO
     if request.user.is_authenticated:
         if request.method == 'GET':
-            if request.user.is_superuser:
-                template = loader.get_template('admin_response.html')
-                context = {}
-                return HttpResponse(template.render(context, request))
             user = Person.objects.get(name=request.user.username)
             jd = json.JSONDecoder()
             list_of_wishes = jd.decode(str(user.all_ids))
@@ -165,5 +165,24 @@ def delete(request, pk):
             user.all_ids = json_of_wishes
             user.save()
             return redirect('/my_list')
+    else:
+        return redirect('/login')
+
+def delete_adm(request, pk):
+    if request.user.is_authenticated:
+        if request.method == 'POST':
+            user = Person.objects.get(name=request.user.username)
+            if user.have_perm('WishList.delete_obj'):
+                #user = Person.objects.get(name=name)
+                #obj = Object.objects.get(name=pk, description='username')
+                #jd = json.JSONDecoder()
+                #je = json.JSONEncoder()
+                #list_of_wishes = jd.decode(str(user.all_ids))
+                #list_of_wishes.remove(int(obj.id))
+                #json_of_wishes = je.encode(list_of_wishes)
+                #user.all_ids = json_of_wishes
+                #user.save()
+                pass
+
     else:
         return redirect('/login')
