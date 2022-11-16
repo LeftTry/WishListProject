@@ -53,12 +53,6 @@ def register_page(request):
 
         user = User.objects.create_user(username, '', password1)
         person = Person(name=username)
-        content_type = ContentType.objects.get_for_model(Object)
-        permission, created = Permission.objects.get_or_create(
-            codename='delete_obj',
-            content_type=content_type,
-        )
-        user.user_permissions.add(permission)
         person.save()
         user.save()
         return redirect('/')
