@@ -3,9 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <title>Admin_response</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrtiy="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
 <body>
-
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+   <a class="navbar-brand" href="/">
+    <img src="/static/logo.png" width="100" height="50" alt="">
+  </a>
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+            </ul>
+      <form method="post" action="/logout">
+        {% csrf_token %}
+        <input type="submit" name="LogOut" class="btn btn-outline-primary" value="Выйти">
+      </form>
+  </div>
+</nav>
 <div class="container text-center" align="center">
   Вы являетесь админом, вы не можете добавлять желания или иметь вишлисты
 </div>
