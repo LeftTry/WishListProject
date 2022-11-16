@@ -2,13 +2,13 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>WishList:MainPage</title>
+<title>Вишлист: Главная</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrtiy="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
    <a class="navbar-brand" href="/">
-    <img src="/static/logo.jpg" width="100" height="50" alt="">
+    <img src="/static/logo.png" width="100" height="50" alt="">
   </a>
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
@@ -26,20 +26,17 @@
   </div>
 </nav>
 <form method="post">
-    {% csrf_token %}
-    <div class="container text-right">
-    <input type="submit" class="btn btn-primary" value="Добавить в вишлист">
-  </div>
 <div class="container text-center">
-  <div class="row align-items-start">
+  <div class="row align-items-start gx-300">
       {% if list_of_lists %}
       {% for name, list_of_wishes in list_of_lists.items %}
-        <div class="card" style="width: 18rem;">
-            <div class="card-title"> {{name}}</div>
+      <div class="col">
+        <div class="card border-dark" style="">
+            <div class="card-header">{{name}}</div>
             <div class="card-body">
                 <ul class="list-group">
                     {%for wish in list_of_wishes%}
-                    <li class="list-group-item">
+                    <li class="list-group-item list-group-item-info">
                         <div class="form-check">
                         <input class="form-check-input me-1" type="checkbox" value="{{wish.name}}" name = "bro" id = "olo">
                         <label class="form-check-label" for="olo"> {{wish.name}}</label>
@@ -56,6 +53,7 @@
                     {%endfor%}
                 </ul>
             </div>
+            </div>
         </div>
       {% endfor %}
     {% else %}
@@ -65,6 +63,11 @@
     </div>
   </div>
 </div>
+    {% csrf_token %}
+    <div class="container text-right">
+            <input type="submit" class="btn btn-primary" value="Добавить в вишлист">
+        <p>Выбранные желания нужно добавить в вишлист</p>
+  </div>
 </form>
 </body>
 </html>

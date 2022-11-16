@@ -13,7 +13,6 @@ from django.contrib.auth.models import PermissionsMixin
 
 def login_page(request):
     if request.method == 'GET':
-        # если юзер залогинен - редирект на основную стр
         if request.user.is_authenticated:
             return redirect('/')
         return render(request, 'login.html')
@@ -101,6 +100,10 @@ def own_wishlist(request):
         
         if request.method == 'POST':
             wish = request.POST.get('wish', '')
+            if len(wish) > 30:
+                messages.error(request, 'Желание должно быть меньше 30 символов!')
+                return redirect('/my_list')
+            #TODO find a profanity filter
             obj, created = Object.objects.get_or_create(name=wish, description='username')
             user = Person.objects.get(name=request.user.username)
             jd = json.JSONDecoder()

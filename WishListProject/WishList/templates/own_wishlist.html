@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>WishList:MyWishlist</title>
+<title>Вишлист: Мой лист</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrtiy="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
 <body>
@@ -32,7 +32,7 @@
       {% if list_of_wishes %}
       <ul class="list-group">
       {% for wish in list_of_wishes %}
-          <li class="list-group-item">{{ wish.name }} <form action="{% url 'wishes:delete' wish.id %}" method="post">
+          <li class="list-group-item ">{{ wish.name }} <form action="{% url 'wishes:delete' wish.id %}" method="post">
             {% csrf_token %}
             <input type="submit" class="btn btn-danger" value="Удалить">
         </form></li>
@@ -47,6 +47,12 @@
         <div class="form-group">
           <input type="text" placeholder="Введите желание" class="form-control" id="exampleInputPassword1" name="wish"/><br>
        </div>
+        {% if messages %}
+    {% for message in messages %}
+    <div class="alert alert-danger">{{ message }}</div>
+    {% endfor %}
+{% endif %}
+
       <input type="submit" class="btn btn-primary" value="Добавить в вишлист">
     </form>
     </div>
