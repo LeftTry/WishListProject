@@ -82,6 +82,10 @@ def own_wishlist(request):
     #TODO
     if request.user.is_authenticated:
         if request.method == 'GET':
+            if request.user.is_superuser:
+                template = loader.get_template('admin_response.html')
+                context = {}
+                return HttpResponse(template.render(context, request))
             user = Person.objects.get(name=request.user.username)
             jd = json.JSONDecoder()
             list_of_wishes = jd.decode(str(user.all_ids))
@@ -118,7 +122,7 @@ def list_of_wishlists(request):
         if request.method == 'GET':
             listoflists = {}
             listofuserids = []
-            for i in range(2):
+            for i in range(3):
                 rand_person = random.choice(Person.objects.all())
                 while rand_person.name == request.user.username or rand_person.name in listofuserids:
                     rand_person = random.choice(Person.objects.all())
